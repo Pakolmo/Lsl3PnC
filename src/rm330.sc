@@ -25,6 +25,7 @@
 	theDrinker
 	local4
 	local5
+	sitting ;add
 )
 (instance rm330 of Room
 	(properties
@@ -58,6 +59,7 @@
 		(aCurtain init:)
 		(aPanties init:)
 		(self setScript: RoomScript)
+		(User canInput: FALSE canControl: TRUE mapKeyToDir: FALSE) ;add quitar teclado
 		(if (== prevRoomNum 335)
 			(HandsOff)
 			(ego
@@ -225,7 +227,8 @@
 	)
 	
 	(method (handleEvent event)
-		(if (or (!= (event type?) saidEvent) (event claimed?))
+;;;		(if (or (!= (event type?) saidEvent) (event claimed?))
+	(if (event claimed?)
 			(return)
 		)
 		(if local2
@@ -422,9 +425,501 @@
 					)
 				)
 			)
+			
+;;;					((== (event type?) evMOUSEBUTTON)
+;;;				(if (& (event modifiers?) emRIGHT_BUTTON) ;is right_click
+;;;					(event claimed: 1)
+;;;					(switch theCursor ;current cursor
+;;;						(itemIcon
+;;;							(theGame setCursor: 999 (HaveMouse)) 
+;;;						)
+;;;
+;;;						(996
+;;;							(theGame setCursor: 998 (HaveMouse))
+;;;						)
+;;;						(999
+;;;							(theGame setCursor: 996 (HaveMouse))
+;;;						)
+;;;						(992
+;;;							(theGame setCursor: 998 (HaveMouse))
+;;;						)
+;;;						(998
+;;;							(theGame setCursor: 995 (HaveMouse))
+;;;						)
+;;;						(995
+;;;							(theGame setCursor: 994 (HaveMouse))
+;;;						)
+;;;						(994
+;;;							(if
+;;;									(== itemIcon 900)
+;;;									(== itemIcon 992)
+;;;							
+;;;							
+;;;								(theGame setCursor: 999 (HaveMouse)) ;991
+;;;							else
+;;;								(theGame setCursor: itemIcon (HaveMouse))
+;;;								(= theCursor itemIcon)
+;;;							)
+;;;						)
+;;;					)                                                                  
+;;;				else
+
+			((== (event type?) evMOUSEBUTTON)
+				(if (& (event modifiers?) emRIGHT_BUTTON) ;is right_click
+					(switch theCursor ;current cursor
+						(itemIcon
+							(theGame setCursor: 999 (HaveMouse)) ;switch to exit intead of walk
+							(event claimed: 1)
+						)
+						(991 ;if exit
+							(theGame setCursor: 998 (HaveMouse))
+							(event claimed: 1)
+						)
+						(999 ;just incase they have the walk cursor
+							(theGame setCursor: 998 (HaveMouse))
+							(event claimed: 1)
+						)
+						(993 ;just incase they have the arrow cursor
+							(theGame setCursor: 996 (HaveMouse))
+							(event claimed: 1)
+						)
+						(996
+							(theGame setCursor: 994 (HaveMouse))
+							(event claimed: 1)
+						)
+						(998
+							(theGame setCursor: 995 (HaveMouse))
+							(event claimed: 1)
+						)
+						(995
+							(theGame setCursor: 996 (HaveMouse))
+							(event claimed: 1)
+						)
+						(994
+							(if
+								(or 
+									(== itemIcon 900)
+									(== itemIcon 994)
+									(== itemIcon 666)
+									(== itemIcon 992)
+									(== itemIcon 993)
+								)
+								(theGame setCursor: 999 (HaveMouse))
+							else
+								(theGame setCursor: itemIcon (HaveMouse))
+								(= theCursor itemIcon)
+							)
+							(event claimed: 1)
+						)
+					)                                                                  
+				else ;left clicks
+				
+								(if
+
+					(and ;background
+						
+						(> (event x?) 119) ;x1 (> (mouseX) (left edge of rectangle))
+						(< (event x?) 270) ;x2 
+						(> (event y?) 21) ;y1
+						(< (event y?) 170) ;y2
+					)	
+						
+						
+					
+						(event claimed: TRUE)
+						(switch theCursor	
+								
+							
+							
+							
+							
+							(998  ;look
+								(Print 330 36)
+								(Print 330 37
+								#at -1 144
+						)
+						
+						)(else
+							(event claimed: FALSE)
+						)
+				))
+				
+					(if
+
+					(and ;exit room
+						
+						(> (event x?) 311) ;x1 (> (mouseX) (left edge of rectangle))
+						(< (event x?) 319) ;x2 
+						(> (event y?) 105) ;y1
+						(< (event y?) 177) ;y2
+					)	
+						
+						
+					
+						(event claimed: TRUE)
+						(switch theCursor	
+								
+							
+							
+							
+							
+						(999 ;Walk
+							(ego setMotion: MoveTo 321 145)
+						
+						)(else
+							(event claimed: FALSE)
+						)
+				))
+				
+				
+				
+				(if
+					(or
+						(ClickedOnObj aDale (event x?) (event y?))
+					(and ;scenario
+						
+						(> (event x?) 37) ;x1 (> (mouseX) (left edge of rectangle))
+						(< (event x?) 106) ;x2 
+						(> (event y?) 50) ;y1
+						(< (event y?) 121) ;y2
+					)	
+					)	
+						
+					
+						(event claimed: TRUE)
+						(switch theCursor	
+								
+							
+							
+							
+							
+							(14  ;panties
+															(cond 
+						((not (ego has: iPanties))
+							(DontHave)
+						)
+
+						((!= local2 2)
+							(Print 330 5)
+						)
+						(else
+							(= itemIcon 900) ;clear menu inv item pic
+							(theGame setCursor: 998 (HaveMouse)) ;clear inv cursor, switch to look
+							(self changeState: 12)
+						)
+					)
+					(event claimed: TRUE)
+				)
+							
+							
+							
+						(998 ; Look
+									(cond 
+						((== local2 0)
+							(Print 330 6)
+						)
+						((< local2 6)
+							(Print 330 7)
+							(Print 330 8 #at -1 144)
+						)
+						((> local2 6)
+							(Print 330 9)
+						)
+						((!= currentStatus egoSITTING)
+							(Print 330 10)
+						)
+						(else
+							(RoomScript changeState: 18)
+							(= currentStatus egoSITTING)
+						)
+					)
+				)
+					
+						(996 ; TALK
+									(cond	
+									((switch local2
+										(2
+											(Print 330 11)
+										)
+										(3
+											(Print 330 12)
+										)
+										(4
+											(Print 330 13)
+										)
+										(5
+											(Print 330 14)
+											(= local5 1)
+										)
+										(1
+											(Print 330 12)
+										)
+										(6
+											(Print 330 15)
+										)
+										(else
+											(Print 330 16)
+										)
+									))
+							)
+						)
+				(994 ;Zipped
+					(cond 
+						((not (ego has: iPanties))
+							(DontHave)
+						)
+
+						((!= local2 2)
+							(Print 330 5)
+						)
+						(else
+							(= itemIcon 900) ;clear menu inv item pic
+							(theGame setCursor: 998 (HaveMouse)) ;clear inv cursor, switch to look
+							(self changeState: 12)
+							
+							
+							
+						)
+					)
+					(event claimed: TRUE)
+				)
+						))
+		
+			
+				(if ;chairsdale
+					(or				
+
+							(ClickedOnObj atpPchair (event x?) (event y?))	
+							(ClickedOnObj atpDchair (event x?) (event y?))
+	
+					)
+						(if (InRoom iPanties
+							))
+			
+							
+			
+			
+			
+			
+									(event claimed: TRUE)
+					(switch theCursor
+						(998 ;look
+												(cond 
+						((== local2 0)
+							(Print 330 6)
+						)
+						((< local2 6)
+							(Print 330 7)
+							(Print 330 8 #at -1 144)
+						)
+						((> local2 6)
+							(Print 330 9)
+						)
+						((!= currentStatus egoSITTING)
+							(Print 330 10)
+						)
+						(else
+							(DaleScript changeState: 18)
+						)
+					))
+			(else(event claimed: FALSE)
+			)
+					
+				
+				))
+			
+			
+			
+			
+				(if ;chairs
+;;;					(or				
+							(and ;seat
+						
+						(> (event x?) 282) ;x1 (> (mouseX) (left edge of rectangle))
+						(< (event x?) 293) ;x2 
+						(> (event y?) 137) ;y1
+						(< (event y?) 153) ;y2
+					)
+;;;						(if (InRoom iPanties
+;;;							))
+;;;			
+;;;					)
+						(event claimed: TRUE)
+					(switch theCursor
+						(998 ;look
+												(cond 
+						((== local2 0)
+							(Print 330 6)
+						)
+						((< local2 6)
+							(Print 330 7)
+							(Print 330 8 #at -1 144)
+						)
+						((> local2 6)
+							(Print 330 9)
+						)
+						((!= currentStatus egoSITTING)
+							(Print 330 10)
+						)
+						(else
+							(DaleScript changeState: 18)
+						)
+					))
+						(995 ;use
+							
+										(cond 
+					((& (ego onControl:) cGREEN)
+						;(Print 330 22)
+					)
+					((not (& (ego onControl:) cBLUE))
+						(NotClose)
+					)
+					((== currentStatus egoSITTING)
+					;	(YouAre)
+						(RoomScript changeState: 9)
+						(= currentStatus egoNORMAL)
+						
+						
+						
+						
+						
+					)
+					((!= currentStatus 17)
+						(GoodIdea)
+					)
+					(else
+						(Ok)
+						(RoomScript changeState: 1)
+						(= currentStatus egoSITTING)
+					)
+										))
+			(else
+				(event claimed: FALSE)
+				)
+		
+							
+			)
+				
+				)
+
+						
+
+			
+				(if ;
+					(or
+						(ClickedOnObj aDrinker1  (event x?) (event y?))
+			 			(ClickedOnObj aDrinker2  (event x?) (event y?))
+						(ClickedOnObj aDrinker3  (event x?) (event y?))
+			 			(ClickedOnObj aDrinker4  (event x?) (event y?))		
+					)
+						(event claimed: TRUE)
+					(switch theCursor
+						(996 ;talk
+								(Print 330 17)
+						;	(Print 330 18)
+						)
+			(else
+				(event claimed: FALSE)
+				)
+		
+							
+			)
+				
+				)
+
+
+
+
+
+
+
+						(if ;clothes
+					
+						(ClickedOnObj aClothes (event x?)(event y?))
+
+						(event claimed: TRUE)
+					(switch theCursor
+						(995 ;use
+						
+						(Print 330 19)
+						)
+			(else
+				(event claimed: FALSE)
+				)
+		
+							
+			)
+				
+				)
+			
+							(if (== (event type?) evMOUSEBUTTON)
+    			(if (== currentStatus egoNORMAL)
+    				(event claimed: TRUE)
+        			;(if (== theCursor 992) ;use wait sierra cursor to stand up.
+            											(cond 
+					((== currentStatus 17)
+						(YouAre)
+					)
+					((!= currentStatus egoSITTING)
+						;(GoodIdea)
+						(RoomScript changeState: 1) ;9
+						(= currentStatus egoSITTING)
+					)
+					((== local2 6)
+						(Print 330 23)
+						(RoomScript changeState: 9) ;9
+						(= currentStatus egoSITTING)
+					)
+					(else
+						(RoomScript changeState: 9) ;9
+						(= currentStatus egoNORMAL)
+					)
+
+			)
+				)
+							)
+						
+			
+			
+			
+			
+							(if (== (event type?) evMOUSEBUTTON)
+    			(if (== currentStatus egoSITTING)
+        			(if (== theCursor 992) ;use wait sierra cursor to stand up.
+        				(event claimed: TRUE)
+            											(cond 
+					((== currentStatus 17)
+						(YouAre)
+					)
+					((!= currentStatus egoSITTING)
+						(GoodIdea)
+						(RoomScript changeState: 9) ;9
+						(= currentStatus egoSITTING)
+					)
+					((== local2 6)
+						(Print 330 23)
+						(RoomScript changeState: 9) ;9
+						(= currentStatus egoSITTING)
+					)
+					(else
+						(RoomScript changeState: 9) ;9
+						(= currentStatus egoNORMAL)
+					)
+				)
+			)
+			
+       				 
+    			
+			
+							))
+					))))
+			
+			
+			
+		
+
 		)
-	)
-)
+
 
 (instance aDale of Actor
 	(properties
@@ -597,24 +1092,26 @@
 				)
 			)
 			(24
-				(= seconds 11)
+				(= seconds 11) ;11
 			)
 			(25
+				
 				(if (!= currentStatus egoSITTING)
-					(= seconds 5)
+					(= seconds 5) ;5
 					(-- state)
 				else
 					(Print 330 50)
 					(= local2 5)
 					(aDale setCycle: BegLoop self)
 				)
+				
 			)
 			(26
 				(aDale
 					cycleSpeed: 0
 					setStep: 3 2
 					setCycle: Walk
-					ignoreActors: 0
+					ignoreActors: 1 ;0
 					illegalBits: 0
 					setLoop: -1
 					baseSetter: squareBase
@@ -626,6 +1123,8 @@
 				(aDale dispose:)
 			)
 		)
+		
+
 	)
 )
 
