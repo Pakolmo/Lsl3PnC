@@ -7,7 +7,6 @@
 (use Game)
 (use Invent)
 (use System)
-(use User)
 
 (public
 	rm335 0
@@ -28,7 +27,6 @@
 	
 	(method (init)
 		(super init:)
-		(User canInput: FALSE mapKeyToDir: FALSE) ;add quitar teclado
 		(self setRegions: FACE setScript: RoomScript)
 		(NotifyScript 71 1 154 78)
 		(NotifyScript 71 2 188 81)
@@ -58,8 +56,7 @@
 	)
 	
 	(method (handleEvent event)
-		(if (event claimed?)
-	;	(if (or (!= (event type?) saidEvent) (event claimed?))
+		(if (or (!= (event type?) saidEvent) (event claimed?))
 			(return)
 		)
 		(cond 
@@ -242,174 +239,6 @@
 				(EgoSays 335 43)
 				(PersonSays 335 44)
 			)
-			
-			
-			((== (event type?) evMOUSEBUTTON)
-				(if (& (event modifiers?) emRIGHT_BUTTON) ;is right_click
-					(switch theCursor ;current cursor
-						(itemIcon
-							(theGame setCursor: 991 (HaveMouse)) ;switch to exit intead of walk
-							(event claimed: 1)
-						)
-						(991 ;if exit
-							(theGame setCursor: 998 (HaveMouse))
-							(event claimed: 1)
-						)
-						(999 ;just incase they have the walk cursor
-							(theGame setCursor: 996 (HaveMouse))
-							(event claimed: 1)
-						)
-						(993 ;just incase they have the arrow cursor
-							(theGame setCursor: 996 (HaveMouse))
-							(event claimed: 1)
-						)
-						(996
-							(theGame setCursor: 994 (HaveMouse))
-							(event claimed: 1)
-						)
-						(998
-							(theGame setCursor: 995 (HaveMouse))
-							(event claimed: 1)
-						)
-						(995
-							(theGame setCursor: 996 (HaveMouse))
-							(event claimed: 1)
-						)
-						(994
-							(if
-								(or 
-									(== itemIcon 900)
-									(== itemIcon 994)
-									(== itemIcon 666)
-									(== itemIcon 992)
-									(== itemIcon 993)
-								)
-								(theGame setCursor: 991 (HaveMouse))
-							else
-								(theGame setCursor: itemIcon (HaveMouse))
-								(= theCursor itemIcon)
-							)
-							(event claimed: 1)
-						)
-					)                                                                  
-				else ;left clicks
-					(if 
-						(or
-							(ClickedInRect 140 167 75 82 event) ;eye1
-							(ClickedInRect 180 200 75 83 event) ;eye2
-						)
-						(if (== theCursor 998) ;clicked look on eyes			
-							(Print 335 32)
-							(event claimed: TRUE)
-						)
-					)			
-					(if (ClickedInRect 164 181 83 100 event) ;nose
-						(if (== theCursor 998) ;clicked look on nose			
-							(Print 335 30)
-							(event claimed: TRUE)
-						)
-					)	
-					(if (ClickedInRect 115 130 70 96 event) ;ear1
-						(if (== theCursor 998) ;clicked look on ear			
-							(Print 335 29)
-							(event claimed: TRUE)
-						)
-					)					
-					(if (ClickedInRect 153 185 108 122 event) ;lips
-						(switch theCursor					
-							(998 ;Look
-								(Print 335 31)
-								(event claimed: TRUE)
-							)
-							(996 ;TALK
-								(switch (Random 1 3)
-									(1
-				(EgoSays 335 15)
-				(EgoSays 335 16 67 -1 144)
-				(PersonSays 335 17)
-				(AnimateFace 7 22)
-									)
-									(2
-				(EgoSays 335 18)
-				(PersonSays 335 19)
-				(AnimateFace 5 44)
-									)
-									(3
-										(EgoSays 335 4)
-										(PersonSays 335 5)
-									)
-
-								)
-								(event claimed: TRUE)
-							)	
-						)
-					)	
-					(if
-	
-							(ClickedInRect 126 231 21 62 event) ;hair top
-
-		
-						(switch theCursor					
-							(998 ;Look
-								(Print 335 28)
-								(event claimed: TRUE)
-							)
-						)
-					)
-					(if
-						(and
-							(ClickedInRect 108 232 21 187 event) ;head
-							(== (event claimed?) 0) ;ignore if already clicked on eyes, hair, etc...
-						)
-						(switch theCursor
-							(994 ;Zipped head
-							(cond 
-					((and (not noHoseMsg) (not (ego has: iPantyhose)))
-							(= noHoseMsg TRUE)
-							(PersonSays 335 10)
-						)
-					((and (not noBraMsg) (not (ego has: iBra)))
-						(= noBraMsg TRUE)
-						(PersonSays 335 11)
-					)
-					((and (not noWaterMsg) (or (not (ego has: iWineBottle)) (!= ((Inventory at: iWineBottle) view?) 29)))
-						(= noWaterMsg TRUE)
-						(PersonSays 335 12)
-					)
-					(else
-						(EgoSays 335 13)
-						(PersonSays 335 14)
-					)
-				)
-			)(991 ;EXIT
-			(HandsOff)
-			(self changeState: 1)
-			)(else
-				(event claimed: FALSE)
-				)))
-				)
-				)
-			
-			
-			
-			
-			)
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		)
 	)
-
+)
