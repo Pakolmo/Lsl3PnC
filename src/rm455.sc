@@ -543,6 +543,14 @@
 
 								(event claimed: TRUE)
 							)
+							(21 ;knife
+								(AnimateFace 4)
+								(event claimed: TRUE)
+							)
+							(2 ;knife_normal
+								(AnimateFace 4)
+								(event claimed: TRUE)
+							)
 							(1 ;iCreditCard
 								(cond
 									((Btst fNotShower)
@@ -657,7 +665,7 @@
 								)
 								(event claimed: TRUE)
 							)
-							(9 iSpaKeycard
+							(9 ;iSpaKeycard
 								(cond
 									((Btst fNotShower)
 										(PersonSays 455 5)

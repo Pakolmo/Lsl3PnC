@@ -732,7 +732,7 @@
 			
 			
 				(if ;chairs
-;;;					(or				
+					(or				
 							(and ;seat
 						
 						(> (event x?) 282) ;x1 (> (mouseX) (left edge of rectangle))
@@ -912,9 +912,11 @@
     			
 			
 							))
-					))))
+					))
 			
-			
+			)
+				)
+					)
 			
 		
 
@@ -1097,7 +1099,7 @@
 			(25
 				
 				(if (!= currentStatus egoSITTING)
-					(= seconds 5) ;5
+					(= seconds 15) ;5
 					(-- state)
 				else
 					(Print 330 50)

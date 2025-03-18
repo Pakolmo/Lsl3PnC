@@ -46,6 +46,9 @@
 			(NotifyScript FALLING 2 300)
 		)
 		(super doit:)
+		(if (& (ego onControl:) $012)
+			(curRoom newRoom: 235)
+		)
 	)
 	
 	(method (changeState newState)

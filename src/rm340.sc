@@ -989,8 +989,8 @@
 
 (instance atpChair of PicView
 	(properties
-		y 145
-		x 165
+		y 155 ;145
+		x 165 ;165
 		view 340
 		priority 11
 	)

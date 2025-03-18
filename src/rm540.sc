@@ -444,7 +444,7 @@
 										(else
 											(= itemIcon 900) ;clear menu inv item pic
 											(theGame setCursor: 998 (HaveMouse)) ;clear inv cursor, switch to look
-											
+											((Inventory at: iBra) owner: -1)
 											(self changeState: 1)
 										)
 									)
